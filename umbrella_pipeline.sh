@@ -1,11 +1,16 @@
 #! /bin/bash
 set -e
 
-trjconv="/mb/apps/gromacs-5.0.2_mpi/bin/trjconv_mpi"
-met="../WTmetmd/met1.xtc"
-topol="../WTmetmd/topol.tpr"
-topol_g4="../../WTmetmd/topol_g455.tpr"
-index="../../WTmetmd/umbrella.ndx"
+if [ $# -eq 0 ]
+  then
+    printf "Need to supply the following arguments:\ndirectory to pulling files\nbase directory to gromacs (eg. /usr/bin/gormacs-5.0.2)"
+fi
+
+trjconv=${0}"bin/trjconv_mpi"
+met=${1}"met1.xtc"
+topol=${1}"topol.tpr"
+topol_g4=${1}"topol_g455.tpr"
+index=${1}"umbrella.ndx"
 
 # Generate configurations #
 mkdir structures
@@ -51,3 +56,39 @@ done <list-selected-structures.dat
 # Create run files for each of the structures
 cd directory-umbrella-sampling
 
+cp ../../sub.zip .
+unzip sub.zip
+
+let k=1
+let nst="$(ls *.gro -Art | tail -n 1 | sed 's/[^0-9]*//g')"
+
+while [ $k -le $nst ]
+do
+	echo "Processing structure n..."$k
+	mkdir ${k}-struct
+	cp struct-${k}.gro ${k}-struct
+	cd ${k}-struct/
+	mv struct-${k}.gro struct.gro
+	cp ../submit.sh . 
+	cd ..
+	
+	if [ -e ${k}-struct/struct.gro ]
+	then
+		rm struct-${k}.gro 
+		echo "done"
+	fi
+let k=k+1
+done
+
+# Submit the run files
+let k=1
+let nst=51
+
+while [ $k -le $nst ]
+do
+  cd $k-struct
+  ./submit.sh
+  cd ..
+let k=k+1
+
+done

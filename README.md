@@ -1,3 +1,2 @@
 # umbrella_pipe
-
-Pipeline for umbrella sampling. JM 11.07.16
+A pipeline used to prepare and perform umbrella sampling in Gromacs

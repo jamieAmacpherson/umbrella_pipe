@@ -1,16 +1,24 @@
 #! /bin/bash
 set -e
 
-if [ $# -eq 0 ]
-  then
-    printf "Need to supply the following arguments:\ndirectory to pulling files\nbase directory to gromacs (eg. /usr/bin/gormacs-5.0.2)"
-fi
+# User input for names of files
+echo "Enter name of .xtc file:"
+	read trjinput
+echo "Enter name of .tpr file:"
+	read topinput
+echo "Enter name of .ndx file:"
+	read indinput
+echo "Enter base directory of Gromacs (eg. /usr/bin/gromacs-5.0.2)"
+	read gromdir
+echo "Enter directory to pulling files (eg. /path/to/files)"
+	read pulldir
+exit
 
-trjconv=${0}"bin/trjconv_mpi"
-met=${1}"met1.xtc"
-topol=${1}"topol.tpr"
-topol_g4=${1}"topol_g455.tpr"
-index=${1}"umbrella.ndx"
+trjconv=$gromdir/bin/trjconv_mpi
+met=$pulldir/$trjinput
+topol=$pulldir/$topinput
+topol_g4=$pulldir/$topinput
+index=$pulldir/$indinput
 
 # Generate configurations #
 mkdir structures

@@ -12,7 +12,6 @@ echo "Enter base directory of Gromacs (eg. /usr/bin/gromacs-5.0.2)"
 	read gromdir
 echo "Enter directory to pulling files (eg. /path/to/files)"
 	read pulldir
-exit
 
 trjconv=$gromdir/bin/trjconv_mpi
 met=$pulldir/$trjinput

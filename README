@@ -1,0 +1,5 @@
+Software related to molecular dynamics simulations
+
+Directory:	Author:		Description:
+cMD_setup	Jamie		A collection of scripts which prepare a .pdb structure for a classical MD simulation.
+umbrella_pipe	Jamie		Pipeline for umbrella sampling to obtain the PMF along a pre-defined reaction coordinate.

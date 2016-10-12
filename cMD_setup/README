@@ -1,0 +1,61 @@
+Preparation scripts for MD simulations of polypeptides and proteins.
+Author: Jamie Macpherson
+
+Description:
+A collection of scripts which will enable the user to prepare a .pdb file for simulation using Gromacs.
+In addition to Bash scripts I have also included a series of Gromacs parameter files (.mdp) which contain
+basic parameters for a four-step equilibration in the NVT and NPT ensembles (for a description of molecular
+dynamics in various ensembles refer to the following file: chapt1_theory.pdf). 
+
+1. Solvation of .pdb file (00_Preparation.sh).
+Explicit solvent MD simulation are started by generating a topology file for the polypeptide and solvating the
+starting structure in a bath of explicit water. Note that if you have a protein + ligand system that you would
+like to simulate, the ligand topology must be generated separately.
+
+Use:
+./00_Preparation.sh <molname>
+
+
+2. Ionization of the water bath (01_Ions.sh).
+The system charge may need to be neutralized or the user may want to add a given concentration of ions to the
+solution.
+
+Use:
+./01_Ions.sh <molname> <n_pos_ions> <n_neg_ions> #number of positive & negative ions to add
+
+
+3. Generate positional restraint files (03_Add_POSRES.sh).
+.itp files are generated including parameters which invoke a harmonic restraint potential on protein atoms with
+force constants 1000, 4000, 5000 and 10000 kJ/mol/nm^2.
+
+Use:
+./03_Add_POSRES.sh <molname> <counterion name>
+
+
+4. Minimization of the system (04_Minimization.sh).
+5000 steps of steepest descent are used to minimize the system.
+
+Use: ./04_Minimization.sh <molname>
+
+
+5. NVT equilibration followed by NPT equilibration.
+Following energy minimization with 5000 steps of steepest descent, harmonic positional restriants with a force con-
+stant of 10000 kJ=mol=nm2 are imposed onto the protein heavy atoms and gradually reduced to 1000 kJ=mol=nm2 while
+the temperature was increased from 50 to 300 K at constant volume. During this NVT ensemble equilibration,
+the Berendsen algorithm is employed to regulate the temperature and pressure of the system with coupling constants
+of 0.2 ps and 0.5 ps, respectively. A 1 ns NVT equilibration run at 300 K and 1 bar is then performed, following 1
+ns of equilibration in NPT conditions.
+
+Use: ./05_Equilibration_NVT.sh <molname>
+
+     ./05_Equilibration_NPT.sh <molname>
+
+
+6. Production run (under NPT ensemble conditions).
+Temperature is regulated using the V-rescaling algorithm, with a coupling constant of 0.1. All protein covalent
+bonds are frozen with the LINCS method, while SETTLE is used for water molecules. Electrostatic interactions
+are calculated with the particle mesh Ewald method, with a 1.4 nm cutoff for direct space sums, a 0.12 nm FFT grid
+spacing and a four-order interpolation polynomial for the reciprocal space sums. Van der Walls interactions are
+measured using a 1.4 nm cutoff. The neighbour list for non-covalent interactions is updated every five integration steps.
+
+ 

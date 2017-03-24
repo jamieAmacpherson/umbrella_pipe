@@ -1,0 +1,21 @@
+## Protocol for making movies of MD trajectories in VMD
+
+1. Import trajectory and topology to VMD
+
+vmd structure.pdb trajectory.xtc
+
+2. Open the movie maker in VMD
+
+Extensions -> Visualization -> Moviemaker 
+
+3. Set trajectory as movie setting
+
+Movie Settings -> trajectory
+
+4. Select renderer
+
+Renderer -> Tacheon
+
+5. Start rendering
+
+Make Movie

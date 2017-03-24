@@ -1,0 +1,20 @@
+Here is a collection of files required to run tCONCOORD simulations.
+
+tconc_run.sh - tCONCOORD script. To find out more about tCONCOORD workflow and command line specifics please refer to http://wwwuser.gwdg.de/~dseelig/tconcoord.html 
+
+input.cpf - tCONCOORD input file
+
+
+Additional notes (Great thanks to Arianna Fornili!):
+
+What usually helps:
+
+- including all hydrogens
+- minimising the structure before tdist
+- using a tpr as input to tdist (prepared from the minimised structure). Be aware that you need to prepare the tpr file with Gromacs-3.3.3, otherwise the tdist run will crash due to tpr file incompactability.
+
+If there are problems with a small protein molecule, one can proceed with a very thorough minimisation or start from an alternative structure.
+
+For very large molecules (usually there are many problems that lead to failure) one could play around with cfreq and damp values. But if you can obtain at least few structures per job, the best thing would be to run a lot of jobs in parallel with -seed -1.
+
+

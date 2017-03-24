@@ -1,0 +1,7 @@
+Original tCONCOORD files by Arianna Fornili:
+
+-em.mdp required for protein minimisation.
+
+-input.cpf tCONCOORD input file
+
+-run1.sh and run2.sh scripts that allow generation of suitable structural input files (Gromacs energy minimisation procedure) and tCONCOORD simulation setup

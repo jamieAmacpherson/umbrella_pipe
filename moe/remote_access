@@ -1,0 +1,11 @@
+The local King's network has restricted access from the outside through
+a firewall which you can by-pass using the port '-p51515'. However,
+because the MOE license server is hosted on Ribosome it is not possible
+to access from outside of the local network.
+
+Procedure for running MOE off-campus:
+1. SSH to mito, forwarding the X-terminal
+ssh -p51515 -X usersame@159.52.55.65
+
+2. Run mito
+/apps/moe2015/bin-lnx64/moe
